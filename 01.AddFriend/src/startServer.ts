@@ -1,11 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { GraphQLSchema } from 'graphql';
-import { makeExecutableSchema } from 'graphql-tools';
-
-import resolvers from './resolvers';
-import schemas from './schemas';
+import { schemas, resolvers } from './graphql';
 import connectDB from './repository';
 
 export const startServer = async () => {
@@ -14,13 +10,9 @@ export const startServer = async () => {
     const PORT = 9999;
     const app = express();
 
-    const schema: GraphQLSchema = makeExecutableSchema({
+    const server = new ApolloServer({
       typeDefs: schemas,
       resolvers,
-    });
-
-    const server = new ApolloServer({
-      schema,
     });
 
     server.applyMiddleware({ app, cors: false });

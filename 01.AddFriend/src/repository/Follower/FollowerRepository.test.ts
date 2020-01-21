@@ -20,80 +20,80 @@ const dddEmail = 'ddd@gmail.com';
 const dddNickname = 'ddd';
 
 describe('following test', () => {
-  // it('aaa가 bbb를 following 하면, 리턴값을 aaa의 Follow instance다.', async () => {
-  //   const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-  //   const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
-  //   const follow = (await getFollowerRepository().followingUser(
-  //     aaa,
-  //     bbb,
-  //   )) as Follow;
-  //   // console.log(follow);
-  //   expect(follow.follower.email).toEqual(aaa.email);
-  //   expect(follow.following.email).toEqual(bbb.email);
-  //   expect(Object.keys(follow)).toEqual(
-  //     expect.arrayContaining([
-  //       'following',
-  //       'follower',
-  //       'id',
-  //       'checked',
-  //       'createdAt',
-  //       'updatedAt',
-  //     ]),
-  //   );
-  // });
+  it('aaa가 bbb를 following 하면, 리턴값을 aaa의 Follow instance다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
+    const follow = (await getFollowerRepository().followingUser(
+      aaa,
+      bbb,
+    )) as Follow;
+    // console.log(follow);
+    expect(follow.follower.email).toEqual(aaa.email);
+    expect(follow.following.email).toEqual(bbb.email);
+    expect(Object.keys(follow)).toEqual(
+      expect.arrayContaining([
+        'following',
+        'follower',
+        'id',
+        'checked',
+        'createdAt',
+        'updatedAt',
+      ]),
+    );
+  });
 
-  // it('자기 자신을 following하면 null을 리턴한다.', async () => {
-  //   const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-  //   const follow = (await getFollowerRepository().followingUser(
-  //     aaa,
-  //     aaa,
-  //   )) as Follow;
-  //   expect(follow).toBeNull();
-  // });
+  it('자기 자신을 following하면 null을 리턴한다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const follow = (await getFollowerRepository().followingUser(
+      aaa,
+      aaa,
+    )) as Follow;
+    expect(follow).toBeNull();
+  });
 
-  // it('없는 user를 following하면 null을 리턴한다.', async () => {
-  //   const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-  //   const noUser = getUserRepository().create({ email: 'ccc' });
-  //   const noUserFollow = await getFollowerRepository().followingUser(
-  //     aaa,
-  //     noUser,
-  //   );
-  //   expect(noUserFollow).toBeNull();
-  // });
+  it('없는 user를 following하면 null을 리턴한다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const noUser = getUserRepository().create({ email: 'ccc' });
+    const noUserFollow = await getFollowerRepository().followingUser(
+      aaa,
+      noUser,
+    );
+    expect(noUserFollow).toBeNull();
+  });
 
-  // it('aaa가 bbb를 following 한 후 다시 following 하면 null을 리턴한다.', async () => {
-  //   const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-  //   const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
-  //   const follow = (await getFollowerRepository().followingUser(
-  //     aaa,
-  //     bbb,
-  //   )) as Follow;
-  //   expect(follow.follower.email).toEqual(aaa.email);
-  //   expect(follow.following.email).toEqual(bbb.email);
+  it('aaa가 bbb를 following 한 후 다시 following 하면 null을 리턴한다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
+    const follow = (await getFollowerRepository().followingUser(
+      aaa,
+      bbb,
+    )) as Follow;
+    expect(follow.follower.email).toEqual(aaa.email);
+    expect(follow.following.email).toEqual(bbb.email);
 
-  //   // 이미 following 한 유저를 following하면 null
-  //   const refollow = await getFollowerRepository().followingUser(aaa, bbb);
-  //   expect(refollow).toBeNull();
+    // 이미 following 한 유저를 following하면 null
+    const refollow = await getFollowerRepository().followingUser(aaa, bbb);
+    expect(refollow).toBeNull();
 
-  //   const followersOfbbb = await getFollowerRepository().getFollowers(bbb);
-  //   // console.log(followersOfbbb);
-  //   expect(followersOfbbb).toHaveLength(1);
-  //   expect(followersOfbbb.map((f) => f.follower.email)).toEqual([aaa.email]);
-  // });
+    const followersOfbbb = await getFollowerRepository().getFollowers(bbb);
+    // console.log(followersOfbbb);
+    expect(followersOfbbb).toHaveLength(1);
+    expect(followersOfbbb.map((f) => f.follower.email)).toEqual([aaa.email]);
+  });
 
-  // it('aaa, bbb가 ccc를 following 하면 ccc의 followers는 User[2]를 리턴한다.', async () => {
-  //   const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-  //   const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
-  //   const ccc = await getUserRepository().addUser(cccEmail, cccNickname);
-  //   await getFollowerRepository().followingUser(aaa, ccc);
-  //   await getFollowerRepository().followingUser(bbb, ccc);
-  //   const followersOfccc = await getFollowerRepository().getFollowers(ccc);
-  //   // console.log(followersOfccc);
-  //   expect(followersOfccc).toHaveLength(2);
-  //   expect(followersOfccc.map((f) => f.follower.email).sort()).toEqual(
-  //     [aaa.email, bbb.email].sort(),
-  //   );
-  // });
+  it('aaa, bbb가 ccc를 following 하면 ccc의 followers는 User[2]를 리턴한다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
+    const ccc = await getUserRepository().addUser(cccEmail, cccNickname);
+    await getFollowerRepository().followingUser(aaa, ccc);
+    await getFollowerRepository().followingUser(bbb, ccc);
+    const followersOfccc = await getFollowerRepository().getFollowers(ccc);
+    // console.log(followersOfccc);
+    expect(followersOfccc).toHaveLength(2);
+    expect(followersOfccc.map((f) => f.follower.email).sort()).toEqual(
+      [aaa.email, bbb.email].sort(),
+    );
+  });
 
   it('aaa가 bbb, ccc를 following 하면 aaa의 following는 User[2]를 리턴한다.', async () => {
     const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
@@ -123,51 +123,51 @@ describe('following test', () => {
   });
 });
 
-// describe('follow/following 삭제', () => {
-//   it('follower를 삭제 할 수 있다.', async () => {
-//     const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-//     const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
-//     const ccc = await getUserRepository().addUser(cccEmail, cccNickname);
-//     await getFollowerRepository().followingUser(aaa, ccc);
-//     await getFollowerRepository().followingUser(bbb, ccc);
-//     const followOfCcc = (await getFollowerRepository().deleteFollower(
-//       ccc,
-//       aaa,
-//     )) as Follow[];
-//     // console.log(followOfCcc);
-//     expect(followOfCcc).toHaveLength(1);
-//     expect(followOfCcc[0].follower.email).toEqual(bbbEmail);
-//   });
+describe('follow/following 삭제', () => {
+  it('follower를 삭제 할 수 있다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
+    const ccc = await getUserRepository().addUser(cccEmail, cccNickname);
+    await getFollowerRepository().followingUser(aaa, ccc);
+    await getFollowerRepository().followingUser(bbb, ccc);
+    const followOfCcc = (await getFollowerRepository().deleteFollower(
+      ccc,
+      aaa,
+    )) as Follow[];
+    // console.log(followOfCcc);
+    expect(followOfCcc).toHaveLength(1);
+    expect(followOfCcc[0].follower.email).toEqual(bbbEmail);
+  });
 
-//   it('following을 삭제 할 수 있다.', async () => {
-//     const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-//     const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
-//     const ccc = await getUserRepository().addUser(cccEmail, cccNickname);
-//     await getFollowerRepository().followingUser(aaa, bbb);
-//     await getFollowerRepository().followingUser(aaa, ccc);
+  it('following을 삭제 할 수 있다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
+    const ccc = await getUserRepository().addUser(cccEmail, cccNickname);
+    await getFollowerRepository().followingUser(aaa, bbb);
+    await getFollowerRepository().followingUser(aaa, ccc);
 
-//     await getFollowerRepository().deleteFollowing(aaa, bbb);
+    await getFollowerRepository().deleteFollowing(aaa, bbb);
 
-//     const followOfBbb = await getFollowerRepository().getFollowers(bbb);
-//     const followOfCcc = await getFollowerRepository().getFollowers(ccc);
-//     // console.log(followOfAaa);
-//     expect(followOfBbb).toEqual([]);
-//     expect(followOfCcc).toHaveLength(1);
-//     expect(followOfCcc[0].follower.email).toEqual(aaaEmail);
-//   });
+    const followOfBbb = await getFollowerRepository().getFollowers(bbb);
+    const followOfCcc = await getFollowerRepository().getFollowers(ccc);
+    // console.log(followOfAaa);
+    expect(followOfBbb).toEqual([]);
+    expect(followOfCcc).toHaveLength(1);
+    expect(followOfCcc[0].follower.email).toEqual(aaaEmail);
+  });
 
-//   it('following을 모두 삭제하면 빈 배열을 리턴한다.', async () => {
-//     const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
-//     const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
-//     await getFollowerRepository().followingUser(aaa, bbb);
-//     const followOfAaa = (await getFollowerRepository().deleteFollowing(
-//       aaa,
-//       bbb,
-//     )) as Follow[];
-//     // console.log(followOfAaa);
-//     expect(followOfAaa).toEqual([]);
-//   });
-// });
+  it('following을 모두 삭제하면 빈 배열을 리턴한다.', async () => {
+    const aaa = await getUserRepository().addUser(aaaEmail, aaaNickname);
+    const bbb = await getUserRepository().addUser(bbbEmail, bbbNickname);
+    await getFollowerRepository().followingUser(aaa, bbb);
+    const followOfAaa = (await getFollowerRepository().deleteFollowing(
+      aaa,
+      bbb,
+    )) as Follow[];
+    // console.log(followOfAaa);
+    expect(followOfAaa).toEqual([]);
+  });
+});
 
 
 describe('client에서의 follower 확인', () => {

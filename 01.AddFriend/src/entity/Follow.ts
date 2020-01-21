@@ -13,10 +13,10 @@ export class Follow {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.follows)
+  @ManyToOne(() => User, (user) => user.following)
   following: User;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.followers)
   follower: User;
 
   @Column({ type: Boolean, default: false })
