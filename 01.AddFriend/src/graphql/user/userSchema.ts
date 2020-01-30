@@ -9,7 +9,7 @@ const userSchema = gql`
   }
 
   extend type Mutation {
-    signup(input: signupInput): User!
+    signup(input: signupInput): AuthPayload!
   }
 
   type User {

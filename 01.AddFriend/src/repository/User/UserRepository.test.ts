@@ -12,8 +12,9 @@ afterAll(async () => {
 describe('User Repository test', () => {
   it('email을 인자로 전달하여 user를 생성한다.', async () => {
     const email = 'abc@gmail.com';
+    const password = 'abc';
     const nickname = 'abc';
-    await getUserRepository().addUser(email, nickname);
+    await getUserRepository().addUser(email, password, nickname);
     const user = await getUserRepository().find({ email });
     expect(user).toHaveLength(1);
     expect(user[0].email).toEqual(email);
