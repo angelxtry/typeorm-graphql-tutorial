@@ -21,7 +21,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "apollo-server-express": "^2.9.16",
+    "apollo-server-express": "^2.14.2",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.7",
     "dotenv": "^8.2.0",
